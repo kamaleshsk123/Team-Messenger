@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { Roboto_Slab, Alegreya, Merriweather } from "next/font/google";
+import ToasterContext from "./context/ToasterContext";
+import AuthContext from "./context/AuthContext";
 
 const merriweather = Merriweather({
   weight: ["400", "700"],
@@ -36,7 +38,10 @@ export default function RootLayout({
       <body
         className={`${merriweather.variable} ${robotoSlab.variable} ${alegreya.variable} antialiased`} // Ensure body gets the dark class from ThemeProvider
       >
-        {children}
+        <AuthContext>
+          <ToasterContext />
+          {children}
+        </AuthContext>
       </body>
     </html>
   );
