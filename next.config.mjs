@@ -1,12 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    appDir: true,
-    swcPlugins: [["next-superjson-plugin", {}]],
+    swcPlugins: [["next-superjson-plugin", {}]], // Keep swcPlugins inside experimental
   },
   images: {
     domains: [
-      "res.cloundinary.com",
+      "res.cloudinary.com",
       "avatars.githubusercontent.com",
       "lh3.googleusercontent.com",
     ],
