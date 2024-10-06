@@ -4,6 +4,7 @@ import "./globals.css";
 import { Roboto_Slab, Alegreya, Merriweather } from "next/font/google";
 import ToasterContext from "./context/ToasterContext";
 import AuthContext from "./context/AuthContext";
+import ActiveStatus from "./components/ActiveStatus";
 
 const merriweather = Merriweather({
   weight: ["400", "700"],
@@ -40,6 +41,7 @@ export default function RootLayout({
       >
         <AuthContext>
           <ToasterContext />
+          <ActiveStatus />
           {children}
         </AuthContext>
       </body>
