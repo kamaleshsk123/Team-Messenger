@@ -1,13 +1,12 @@
-import bcrypt from "bcrypt";
 import NextAuth, { AuthOptions } from "next-auth";
+import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import bcrypt from "bcrypt";
 
 import prisma from "@/app/libs/prismadb";
 
-// Define authOptions, but do not export it directly
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -31,12 +30,10 @@ export const authOptions: AuthOptions = {
         }
 
         const user = await prisma.user.findUnique({
-          where: {
-            email: credentials.email,
-          },
+          where: { email: credentials.email },
         });
 
-        if (!user || !user?.hashedPassword) {
+        if (!user || !user.hashedPassword) {
           throw new Error("Invalid credentials");
         }
 
@@ -44,6 +41,7 @@ export const authOptions: AuthOptions = {
           credentials.password,
           user.hashedPassword
         );
+
         if (!isCorrectPassword) {
           throw new Error("Invalid credentials");
         }
@@ -59,8 +57,7 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Create the handler for NextAuth
 const handler = NextAuth(authOptions);
 
-// Export the handler for GET and POST requests
+// Correctly export handler as GET and POST
 export { handler as GET, handler as POST };
