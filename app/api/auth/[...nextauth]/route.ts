@@ -7,7 +7,8 @@ import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
 import prisma from "@/app/libs/prismadb";
 
-export const authOptions: AuthOptions = {
+// Define authOptions, but do not export it directly
+const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GithubProvider({
@@ -58,6 +59,8 @@ export const authOptions: AuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
+// Create the handler for NextAuth
 const handler = NextAuth(authOptions);
 
+// Export the handler for GET and POST requests
 export { handler as GET, handler as POST };
